@@ -20,6 +20,7 @@ class PublicTagsTests(TestCase):
         res = self.client.get(TAGS_URL)
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
+
 class PrivateTagsTests(TestCase):
 
     def setUp(self):
@@ -62,7 +63,7 @@ class PrivateTagsTests(TestCase):
         payload = {'name': 'test tag'}
         self.client.post(TAGS_URL, payload)
 
-        exists =  Tag.objects.filter(
+        exists = Tag.objects.filter(
             user=self.user,
             name=payload['name']
             ).exists()
@@ -74,4 +75,3 @@ class PrivateTagsTests(TestCase):
         res = self.client.post(TAGS_URL, payload)
 
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
-        
